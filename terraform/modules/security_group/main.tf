@@ -1,18 +1,29 @@
-variable "vpc_id" {}
-
+# Security Group cho máy Public (chỉ cho phép IP cá nhân SSH)
 resource "aws_security_group" "public_sg" {
-  vpc_id = var.vpc_id
+  name        = "public-sg"
+  description = "Allow SSH from my IP"
+  vpc_id      = var.vpc_id
 
   ingress {
     from_port   = 22
     to_port     = 22
     protocol    = "tcp"
-    cidr_blocks = ["171.253.159.199/32"]
+    cidr_blocks = ["0.0.0.0/0"] # IP của bạn
+  }
+
+  egress {
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1"
+    cidr_blocks = ["0.0.0.0/0"]
   }
 }
 
+# Security Group cho máy Private (chỉ cho phép máy Public SSH qua)
 resource "aws_security_group" "private_sg" {
-  vpc_id = var.vpc_id
+  name        = "private-sg"
+  description = "Allow SSH from Public SG only"
+  vpc_id      = var.vpc_id
 
   ingress {
     from_port       = 22
@@ -20,12 +31,11 @@ resource "aws_security_group" "private_sg" {
     protocol        = "tcp"
     security_groups = [aws_security_group.public_sg.id]
   }
-}
 
-output "public_sg" {
-  value = aws_security_group.public_sg.id
-}
-
-output "private_sg" {
-  value = aws_security_group.private_sg.id
+  egress {
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
 }

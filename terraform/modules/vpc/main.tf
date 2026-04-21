@@ -1,7 +1,9 @@
 resource "aws_vpc" "main" {
-  cidr_block = "10.0.0.0/16"
-}
+  cidr_block           = "10.0.0.0/16"
+  enable_dns_hostnames = true # Nên bật để EC2 có DNS name
+  enable_dns_support   = true
 
-output "vpc_id" {
-  value = aws_vpc.main.id
+  tags = {
+    Name = "Main-VPC"
+  }
 }
