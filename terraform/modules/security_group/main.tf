@@ -7,7 +7,7 @@ resource "aws_security_group" "public_sg" {
     from_port   = 22
     to_port     = 22
     protocol    = "tcp"
-    cidr_blocks = ["0.0.0.0/0"] # sửa thành IP của bạn nếu muốn full điểm
+    cidr_blocks = ["171.253.159.199/32"]
   }
 }
 

@@ -26,8 +26,8 @@ module "nat" {
 }
 
 # Route Tables
-module "route" {
-  source              = "./modules/route"
+module "route_table" {
+  source              = "./modules/route_table"
   vpc_id              = module.vpc.vpc_id
   igw_id              = module.igw.igw_id
   nat_id              = module.nat.nat_id
@@ -36,8 +36,8 @@ module "route" {
 }
 
 # Security Groups
-module "sg" {
-  source = "./modules/sg"
+module "security_groups" {
+  source = "./modules/security_group"
   vpc_id = module.vpc.vpc_id
 }
 
@@ -46,6 +46,6 @@ module "ec2" {
   source            = "./modules/ec2"
   public_subnet_id  = module.subnet.public_subnet_id
   private_subnet_id = module.subnet.private_subnet_id
-  public_sg         = module.sg.public_sg
-  private_sg        = module.sg.private_sg
+  public_sg         = module.security_groups.public_sg
+  private_sg        = module.security_groups.private_sg
 }

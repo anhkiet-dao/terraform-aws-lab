@@ -1,0 +1,17 @@
+{
+  "yaml.customTags": [
+    "!Ref",
+    "!GetAtt",
+    "!Sub",
+    "!Join",
+    "!FindInMap",
+    "!ImportValue",
+    "!Select",
+    "!Split",
+    "!If",
+    "!Equals",
+    "!And",
+    "!Or",
+    "!Not"
+  ]
+}
