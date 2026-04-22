@@ -43,11 +43,13 @@ module "route_table" {
   private_subnet_id = module.subnet.private_subnet_id
 }
 
-# 7. Triển khai Máy ảo (Sử dụng Subnet và Security Group)
+# 7. Triển khai Máy ảo
 module "ec2" {
   source            = "./modules/ec2"
   public_subnet_id  = module.subnet.public_subnet_id
   private_subnet_id = module.subnet.private_subnet_id
-  public_sg         = module.security_groups.public_sg
-  private_sg        = module.security_groups.private_sg
+  
+  # Sửa lại ở đây cho khớp với output của module security_group
+  public_sg         = module.security_groups.public_sg_id  # Thêm _id vào
+  private_sg        = module.security_groups.private_sg_id # Thêm _id vào
 }
