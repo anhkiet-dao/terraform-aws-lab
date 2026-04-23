@@ -54,6 +54,26 @@ Resources:
       CidrBlock: 10.0.2.0/24
 
   # =========================
+  # Default Security Group
+  # =========================
+  MyCustomDefaultSG:
+    Type: AWS::EC2::SecurityGroup
+    Properties:
+      GroupDescription: "Security Group thay the cho Default SG"
+      VpcId: !Ref MyVPC
+      SecurityGroupIngress:
+        - IpProtocol: all
+          # Thay vi tu tham chieu Gay Circular Dependency,
+          # ta cho phep traffic tu chinh dai IP cua VPC
+          CidrIp: 10.0.0.0/16
+      SecurityGroupEgress:
+        - IpProtocol: all
+          CidrIp: 0.0.0.0/0
+      Tags:
+        - Key: Name
+          Value: MyVPC-Default-SG
+
+  # =========================
   # Public Route Table
   # =========================
   PublicRouteTable:

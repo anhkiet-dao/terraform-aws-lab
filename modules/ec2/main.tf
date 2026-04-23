@@ -16,7 +16,7 @@ resource "aws_instance" "public" {
   subnet_id              = var.public_subnet_id 
   vpc_security_group_ids = [var.public_sg]      
 
-  key_name = "my-key"
+  key_name = "key"
 
   tags = {
     Name = "Public-Instance"
@@ -30,7 +30,7 @@ resource "aws_instance" "private" {
   subnet_id              = var.private_subnet_id
   vpc_security_group_ids = [var.private_sg]
 
-  key_name = "my-key-new" 
+  key_name = "key" 
 
   tags = {
     Name = "Private-Instance"
